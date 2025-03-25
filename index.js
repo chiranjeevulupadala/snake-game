@@ -14,13 +14,12 @@ function regesteerDirectiron() {}
 window.addEventListener("keyup", (event) => {
   var c = event.keyCode;
   if ("37,38,39,40".indexOf(c) != -1) {
-    if (c == 39 && direction != 37) {
-      direction = c;
-    } else if (c == 37 && direction != 39) {
-      direction = c;
-    } else if (c == 38 && direction != 40) {
-      direction = c;
-    } else if (c == 40 && direction != 38) {
+    if (
+      (c == 39 && direction != 37) ||
+      (c == 37 && direction != 39) ||
+      (c == 38 && direction != 40) ||
+      (c == 40 && direction != 38)
+    ) {
       direction = c;
     }
   }
