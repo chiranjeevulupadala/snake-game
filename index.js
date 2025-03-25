@@ -71,7 +71,8 @@ function addSnakeDot(cx, cy) {
   dot.style.width = dotSize + "px";
   dot.style.height = dotSize + "px";
   stage.appendChild(dot);
-  snakeDots.splice(0, 0, dot);
+  // snakeDots.splice(0, 0, dot);
+  snakeDots.push(dot);
 }
 
 function moveSnake() {
@@ -86,8 +87,8 @@ function moveSnake() {
     }
     if (foodPosition[0] == nx && foodPosition[1] == ny) {
       // clearInterval(myTimer);
-      addSnakeDot(nx, ny);
       reLocateFood();
+      addSnakeDot(nx, ny);
       // setTimeout(startnTimer, 2000);
     } else {
       var dot = snakeDots.pop();
