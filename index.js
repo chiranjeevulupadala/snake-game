@@ -13,12 +13,14 @@ var stage = document.getElementById("stage");
 function regesteerDirectiron() {}
 
 // REGISTER DIRECTIONS BASED ON UP, DOWN, LEFT, RIGHT
+var directionChangeCooldownActive = false;
 window.addEventListener("keyup", (event) => {
   var c = event.keyCode;
-  console.log("key code : ", c);
-  if ("37,38,39,40".indexOf(c) != -1) {
-    if (direction != c + 2) {
+  if ("37,38,39,40".indexOf(c) != -1 && !directionChangeCooldownActive) {
+    if (direction != c + 2 && direction != c - 2) {
+      console.log("changing to : ", c);
       direction = c;
+      directionChangeCooldownActive = true;
     }
   }
 });
@@ -50,8 +52,8 @@ var foodDot = document.createElement("div");
 foodDot.classList.add("food");
 stage.appendChild(foodDot);
 function reLocateFood() {
-  var rx = Math.floor((Math.random() + 0.3) * 16) * dotSize;
-  var ry = Math.floor((Math.random() + 0.3) * 16) * dotSize;
+  var rx = Math.floor((Math.random() + 0.2) * 18) * dotSize;
+  var ry = Math.floor((Math.random() + 0.2) * 18) * dotSize;
   foodDot.style.left = rx + "px";
   foodDot.style.top = ry + "px";
   foodDot.style.width = dotSize + "px";
@@ -71,6 +73,7 @@ function addSnakeDot(cx, cy) {
 }
 
 function moveSnake() {
+  directionChangeCooldownActive = false;
   if (direction) {
     var head = snakeDots[0];
     var cx = head.style.left;
@@ -83,13 +86,11 @@ function moveSnake() {
     if (foodPosition[0] == nx && foodPosition[1] == ny) {
       reLocateFood();
       addSnakeDot(nx, ny);
-      console.log("food and had");
     } else {
       var dot = snakeDots.pop();
       snakeDots.splice(0, 0, dot);
       dot.style.left = nx;
       dot.style.top = ny;
-      console.log("move dot");
     }
   }
 }
@@ -98,9 +99,6 @@ function calculateFreeSpots() {
   freeSpots = [];
 }
 
-setInterval(moveSnake, 200);
-
+setInterval(moveSnake, 100);
 addSnakeDot("240px", "240px");
-
-// setInterval(reLocateFood, 200);
 reLocateFood();
